@@ -41,6 +41,12 @@ To run InfluxDB in a Docker container, first create a Dcocker Volume to permanen
         influxdb
 ```
 
+### Check the total size of the Docker Volume for InfluxDB
+
+```
+$ du --summarize --human-readable <path (retrieved from the 'docker volume inspect' command)>
+```
+
 ## Run Grafana in a Docker container
 
 ### Create a Docker Volume for Grafana
