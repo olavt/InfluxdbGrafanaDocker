@@ -24,6 +24,12 @@ To run InfluxDB in a Docker container, first create a Dcocker Volume to permanen
  docker volume create influxdb_data
 ```
 
+### Display detailed information about the Docker Volume for InfluxDB
+
+```
+ docker volume inspect influxdb_data
+```
+
 ### Run InfluxDB in a Docker container
 
 ```
