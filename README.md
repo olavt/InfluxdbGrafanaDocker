@@ -80,3 +80,15 @@ $ docker run --name grafana \
 After the container launched successfully, you can open the Grafana web page by http://<Ip address of Docker host>:3000. Login with default admin/admin user, find and click on the the Add data dources button in the upper-left section of the user interface and then click on InfluxDB.
 
 Use http://influxdb:8086 as the Url. This works, since both the InfluxDB container and the Grafana container is connnected to the same user-defined bridge network.
+
+### Make an archive of the Grafana data files (remember to stop the Grafana container first)
+
+```
+$ sudo tar -cvpf grafana.tar /var/snap/docker/common/var-lib-docker/volumes/grafana_data/_data
+```
+
+### Restore an archive of the InfluxDB data files (remember to stop the InfluxDB container first)
+
+```
+$ sudo tar --same-owner -xvf grafana.tar -C / 
+```
