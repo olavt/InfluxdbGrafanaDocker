@@ -108,7 +108,7 @@ Use http://influxdb:8086 as the Url. This works, since both the InfluxDB contain
 $ sudo tar -cvpf grafana.tar /var/snap/docker/common/var-lib-docker/volumes/grafana_data/_data
 ```
 
-### Restore an archive of the InfluxDB data files (remember to stop the InfluxDB container first)
+### Restore an archive of the Grafana data files (remember to stop the Grafana container first)
 
 ```
 $ sudo tar --same-owner -xvf grafana.tar -C / 
