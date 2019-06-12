@@ -41,6 +41,17 @@ To run InfluxDB in a Docker container, first create a Dcocker Volume to permanen
         influxdb
 ```
 
+Alternative to bind permanent storgae in the container to a directory on the host:
+
+```
+    $ docker run --name="influxdb" \
+        -p 8086:8086 \
+        --mount type=bind,source=/mnt/influxdb,target=/var/lib/influxdb \
+        --network influxdb_grafana_network \
+        --restart on-failure \
+        influxdb
+```
+
 ### Check the total size of the Docker Volume for InfluxDB
 
 ```
@@ -73,6 +84,16 @@ $ sudo tar --same-owner -xvf influxdb.tar -C /
 $ docker run --name grafana \
   -p 3000:3000 \
   -v grafana_data:/var/lib/grafana \
+  --network influxdb_grafana_network \
+  grafana/grafana
+```
+
+Alternative to bind permanent storgae in the container to a directory on the host:
+
+```
+$ docker run --name grafana \
+  -p 3000:3000 \
+  --mount type=bind,source=/mnt/grafana,target=/var/lib/grafana \
   --network influxdb_grafana_network \
   grafana/grafana
 ```
