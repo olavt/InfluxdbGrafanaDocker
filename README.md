@@ -24,12 +24,6 @@ To run InfluxDB in a Docker container, first create a Dcocker Volume to permanen
  $ docker volume create influxdb_data
 ```
 
-### Display detailed information about the Docker Volume for InfluxDB
-
-```
- $ docker volume inspect influxdb_data
-```
-
 ### Run InfluxDB in a Docker container
 
 ```
@@ -41,7 +35,7 @@ To run InfluxDB in a Docker container, first create a Dcocker Volume to permanen
         influxdb
 ```
 
-Alternative to bind permanent storgae in the container to a directory on the host:
+Alternative to bind permanent storage in the container to a directory on the host:
 
 ```
     $ docker run --name="influxdb" \
@@ -58,16 +52,22 @@ Alternative to bind permanent storgae in the container to a directory on the hos
 $ du --summarize --human-readable /var/snap/docker/common/var-lib-docker/volumes/influxdb_data/_data
 ```
 
+### Display detailed information about the Docker Volume for InfluxDB
+
+```
+ $ docker volume inspect influxdb_data
+```
+
 ### Make an archive of the InfluxDB data files (remember to stop the InfluxDB container first)
 
 ```
-$ sudo tar -cvpf influxdb.tar /var/snap/docker/common/var-lib-docker/volumes/influxdb_data/_data
+$ sudo tar -cvpf influxdb.tar -C <path from the Mountpoint section of the docker inspect volume command> .
 ```
 
 ### Restore an archive of the InfluxDB data files (remember to stop the InfluxDB container first)
 
 ```
-$ sudo tar --same-owner -xvf influxdb.tar -C / 
+$ sudo tar --same-owner -xvf influxdb.tar -C <path from the Mountpoint section of the docker inspect volume command>
 ```
 
 ## Run Grafana in a Docker container
@@ -85,10 +85,11 @@ $ docker run --name grafana \
   -p 3000:3000 \
   -v grafana_data:/var/lib/grafana \
   --network influxdb_grafana_network \
+  --restart on-failure \
   grafana/grafana
 ```
 
-Alternative to bind permanent storgae in the container to a directory on the host:
+Alternative to bind permanent storage in the container to a directory on the host:
 
 ```
 $ docker run --name grafana \
@@ -102,14 +103,20 @@ After the container launched successfully, you can open the Grafana web page by 
 
 Use http://influxdb:8086 as the Url. This works, since both the InfluxDB container and the Grafana container is connnected to the same user-defined bridge network.
 
+### Display detailed information about the Docker Volume for Grafana
+
+```
+ $ docker volume inspect grafana_data
+```
+
 ### Make an archive of the Grafana data files (remember to stop the Grafana container first)
 
 ```
-$ sudo tar -cvpf grafana.tar /var/snap/docker/common/var-lib-docker/volumes/grafana_data/_data
+$ sudo tar -cvpf grafana.tar -C <path from the Mountpoint section of the docker inspect volume command> .
 ```
 
 ### Restore an archive of the Grafana data files (remember to stop the Grafana container first)
 
 ```
-$ sudo tar --same-owner -xvf grafana.tar -C / 
+$ sudo tar --same-owner -xvf grafana.tar -C <path from the Mountpoint section of the docker inspect volume command> 
 ```
